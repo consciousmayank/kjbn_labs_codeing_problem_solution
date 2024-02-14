@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kjbn_labs/ui/common/ui_helpers.dart';
+import 'package:kjbn_labs/ui/views/home/circular_timer_widget.dart';
+import 'package:kjbn_labs/ui/views/home/numbers_widget.dart';
+import 'package:kjbn_labs/ui/views/home/results_widget.dart';
 import 'package:stacked/stacked.dart';
 
 import 'home_viewmodel.dart';
@@ -8,16 +11,17 @@ class HomeView extends StackedView<HomeViewModel> {
   const HomeView({Key? key}) : super(key: key);
 
   @override
+  void onViewModelReady(HomeViewModel viewModel) {
+    viewModel.prefetchData();
+    super.onViewModelReady(viewModel);
+  }
+
+  @override
   Widget builder(
     BuildContext context,
     HomeViewModel viewModel,
     Widget? child,
   ) {
-    final widgetHeight = (screenHeight(context) -
-            kToolbarHeight -
-            MediaQuery.of(context).viewPadding.top) /
-        4;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('KJBN Labs'),
@@ -25,62 +29,56 @@ class HomeView extends StackedView<HomeViewModel> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25.0),
+          padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: Column(
             children: [
-              SizedBox(
-                height: widgetHeight,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Card(
-                        color: Colors.deepOrangeAccent,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text('Current Seconds', style: Theme.of(context).textTheme.labelLarge,),
-                            verticalSpaceSmall,
-                            Text('38')
-                          ],
-                        ),
-                      ),
-                      flex: 1,
+              Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: NumbersWidget(
+                      bgColor: Colors.lightBlue.shade200,
+                      label: 'Current Second',
+                      number: viewModel.secondsNumber,
                     ),
-                    Expanded(
-                      child: Card(
-                        color: Colors.teal,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text('Random Number', style: Theme.of(context).textTheme.labelLarge,),
-                            verticalSpaceSmall,
-                            Text('38')
-                          ],
-                        ),
-                      ),
-                      flex: 1,
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: NumbersWidget(
+                      bgColor: Colors.purple.shade200,
+                      label: 'Random Number',
+                      number: viewModel.randomNumber,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
+              verticalSpaceLarge,
               SizedBox(
-                height: widgetHeight,
-                child: Container(
-                  color: Colors.red.shade50,
-                ),
+                height: screenHeight(context)/4,
+                child: viewModel.isResultSuccessful != null ?
+                viewModel.isResultSuccessful!
+                    ? const SuccessfulResultsWidget()
+                    : UnSuccessfulResultsWidget() : const SizedBox.shrink(),
               ),
-              SizedBox(
-                height: widgetHeight,
-                child: Container(
-                  color: Colors.purple.shade50,
+              const Spacer(),
+              // if(viewModel.appStatus == Status.start)
+              const CircularTimerWidget(),
+              const Spacer(),
+              if (viewModel.appStatus == Status.end)
+                ElevatedButton(
+                  onPressed: () {
+                    viewModel.appStatus = Status.start;
+                  },
+                  child: const Text('Start'),
                 ),
-              ),
-              SizedBox(
-                height: widgetHeight,
-                child: Container(
-                  color: Colors.yellow.shade50,
+              if (viewModel.appStatus == Status.start)
+                ElevatedButton(
+                  onPressed: () {
+                    viewModel.appStatus = Status.end;
+                  },
+                  child: const Text('Submit'),
                 ),
-              ),
+              const Spacer(),
             ],
           ),
         ),
