@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:stacked/stacked.dart';
-import 'package:kjbn_labs/ui/common/app_colors.dart';
 import 'package:kjbn_labs/ui/common/ui_helpers.dart';
+import 'package:stacked/stacked.dart';
 
 import 'home_viewmodel.dart';
 
@@ -14,63 +13,75 @@ class HomeView extends StackedView<HomeViewModel> {
     HomeViewModel viewModel,
     Widget? child,
   ) {
+    final widgetHeight = (screenHeight(context) -
+            kToolbarHeight -
+            MediaQuery.of(context).viewPadding.top) /
+        4;
+
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('KJBN Labs'),
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0),
-          child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                verticalSpaceLarge,
-                Column(
+          padding: EdgeInsets.symmetric(horizontal: 25.0),
+          child: Column(
+            children: [
+              SizedBox(
+                height: widgetHeight,
+                child: Row(
                   children: [
-                    const Text(
-                      'Hello, STACKED!',
-                      style: TextStyle(
-                        fontSize: 35,
-                        fontWeight: FontWeight.w900,
+                    Expanded(
+                      child: Card(
+                        color: Colors.deepOrangeAccent,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('Current Seconds', style: Theme.of(context).textTheme.labelLarge,),
+                            verticalSpaceSmall,
+                            Text('38')
+                          ],
+                        ),
                       ),
+                      flex: 1,
                     ),
-                    verticalSpaceMedium,
-                    MaterialButton(
-                      color: Colors.black,
-                      onPressed: viewModel.incrementCounter,
-                      child: Text(
-                        viewModel.counterLabel,
-                        style: const TextStyle(color: Colors.white),
+                    Expanded(
+                      child: Card(
+                        color: Colors.teal,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('Random Number', style: Theme.of(context).textTheme.labelLarge,),
+                            verticalSpaceSmall,
+                            Text('38')
+                          ],
+                        ),
                       ),
+                      flex: 1,
                     ),
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    MaterialButton(
-                      color: kcDarkGreyColor,
-                      onPressed: viewModel.showDialog,
-                      child: const Text(
-                        'Show Dialog',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    MaterialButton(
-                      color: kcDarkGreyColor,
-                      onPressed: viewModel.showBottomSheet,
-                      child: const Text(
-                        'Show Bottom Sheet',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
+              ),
+              SizedBox(
+                height: widgetHeight,
+                child: Container(
+                  color: Colors.red.shade50,
+                ),
+              ),
+              SizedBox(
+                height: widgetHeight,
+                child: Container(
+                  color: Colors.purple.shade50,
+                ),
+              ),
+              SizedBox(
+                height: widgetHeight,
+                child: Container(
+                  color: Colors.yellow.shade50,
+                ),
+              ),
+            ],
           ),
         ),
       ),

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kjbn_labs/app/app.bottomsheets.dart';
-import 'package:kjbn_labs/app/app.dialogs.dart';
 import 'package:kjbn_labs/app/app.locator.dart';
 import 'package:kjbn_labs/app/app.router.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -8,8 +6,6 @@ import 'package:stacked_services/stacked_services.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setupLocator();
-  setupDialogUi();
-  setupBottomSheetUi();
   runApp(const MainApp());
 }
 
