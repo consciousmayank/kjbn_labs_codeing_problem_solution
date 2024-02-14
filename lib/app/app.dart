@@ -16,11 +16,5 @@ import 'package:kjbn_labs/services/app_data_service.dart';
     LazySingleton(classType: NavigationService),
 // @stacked-service
   ],
-  bottomsheets: [
-    // @stacked-bottom-sheet
-  ],
-  dialogs: [
-    // @stacked-dialog
-  ],
 )
 class App {}
