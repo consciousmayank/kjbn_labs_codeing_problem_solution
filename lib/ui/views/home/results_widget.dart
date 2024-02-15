@@ -35,6 +35,8 @@ class SuccessfulResultsWidget extends ViewModelWidget<HomeViewModel> {
 }
 
 class UnSuccessfulResultsWidget extends ViewModelWidget<HomeViewModel> {
+  const UnSuccessfulResultsWidget({super.key});
+
   @override
   Widget build(BuildContext context, HomeViewModel viewModel) => SizedBox(
         width: screenWidth(context),
@@ -47,7 +49,12 @@ class UnSuccessfulResultsWidget extends ViewModelWidget<HomeViewModel> {
                   : 'Sorry! timeout and one attempt is considered for failure as penalty',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleLarge,
-            ).toPadding(padding: const EdgeInsets.only(left: 8, right: 8,),),
+            ).toPadding(
+              padding: const EdgeInsets.only(
+                left: 8,
+                right: 8,
+              ),
+            ),
             verticalSpaceSmall,
             Text(
               '${viewModel.unsuccessfulCount}/${viewModel.unsuccessfulCount + viewModel.successfulCount}',
@@ -61,5 +68,38 @@ class UnSuccessfulResultsWidget extends ViewModelWidget<HomeViewModel> {
               ),
             )
             .toCard(cardColor: Colors.yellow),
+      );
+}
+
+class HintWidget extends ViewModelWidget<HomeViewModel> {
+  const HintWidget({super.key});
+
+  @override
+  Widget build(BuildContext context, HomeViewModel viewModel) => SizedBox(
+        width: screenWidth(context),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              viewModel.appStatus == Status.end
+                  ? 'Click the \'Start\' button to start timer.'
+                  : 'Click the \'Submit\' button before the timer runs out.',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.titleLarge,
+            ).toPadding(
+              padding: const EdgeInsets.only(
+                left: 8,
+                right: 8,
+              ),
+            ),
+            verticalSpaceSmall,
+          ],
+        )
+            .toPadding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 40,
+              ),
+            )
+            .toCard(cardColor: Colors.blue.shade200),
       );
 }
