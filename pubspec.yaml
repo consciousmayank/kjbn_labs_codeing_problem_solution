@@ -13,7 +13,6 @@ dependencies:
   stacked_services: ^1.1.0        #Helper Services (navigation)
   flutter_secure_storage: ^9.0.0  #Shared preferences but are more secure in case device is tampered with.
   hive_flutter: ^1.1.0            #In app encrypted DB. Once a key is used to encrypt tables, Only that key can decrypt the DB.
-  logger: ^1.1.0                  #Logger to print logs.
 
 dev_dependencies:
   build_runner: ^2.4.5
