@@ -54,11 +54,11 @@ class HomeView extends StackedView<HomeViewModel> {
               ),
               verticalSpaceLarge,
               SizedBox(
-                height: screenHeight(context)/4,
+                height: screenHeight(context)/3,
                 child: viewModel.isResultSuccessful != null ?
                 viewModel.isResultSuccessful!
                     ? const SuccessfulResultsWidget()
-                    : UnSuccessfulResultsWidget() : const HintWidget(),
+                    : const UnSuccessfulResultsWidget() : const HintWidget(),
               ),
               const Spacer(),
               // if(viewModel.appStatus == Status.start)
