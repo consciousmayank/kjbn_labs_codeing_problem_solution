@@ -14,7 +14,7 @@ Flutter application solution for the Coding problem of KJBN Labs Flutter applica
     4. hive_flutter: ^1.1.0
         - In app encrypted DB. Once a key is used to encrypt tables, Only that key can decrypt the DB.
 
-#### The screen recordings are in "screen_recordings" folder.
+#### The screen recordings are in "root" folder.
 
 ## Developed by Mayank Joshi
     1. Email : Consciousmayank@gmail.com
