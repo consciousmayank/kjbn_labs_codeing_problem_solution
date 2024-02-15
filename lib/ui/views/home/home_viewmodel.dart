@@ -15,6 +15,8 @@ class HomeViewModel extends BaseViewModel {
   bool? isResultSuccessful;
   Timer? _timer;
   int _currentTime = 5;
+  int startTime = DateTime.now().microsecondsSinceEpoch,
+      endTime = DateTime.now().microsecondsSinceEpoch;
 
   int get currentTime => _currentTime;
 
@@ -23,7 +25,7 @@ class HomeViewModel extends BaseViewModel {
 
   get successfulCount => _appData.fetchSuccessfulCount();
 
-  get unsuccessfulCount => _appData.fetchUnSuccessfulCount() + 1;
+  get unsuccessfulCount => _appData.fetchUnSuccessfulCount();
 
   set currentTime(int value) {
     _currentTime = value;
@@ -35,6 +37,7 @@ class HomeViewModel extends BaseViewModel {
   set appStatus(Status value) {
     _appStatus = value;
     if (value == Status.end) {
+      endTime = DateTime.now().microsecondsSinceEpoch;
       generateRandomNumber();
       generateSecondsNumber();
       isResultSuccessful = randomNumber == secondsNumber;
@@ -47,6 +50,7 @@ class HomeViewModel extends BaseViewModel {
       }
       cancelTimer();
     } else {
+      startTime = DateTime.now().microsecondsSinceEpoch;
       currentTime = 5;
       startTimer();
       isResultSuccessful = null;
@@ -72,7 +76,7 @@ class HomeViewModel extends BaseViewModel {
   }
 
   void generateSecondsNumber() {
-    secondsNumber = DateTime.now().second;
+    secondsNumber = Duration(microseconds: endTime - startTime).inSeconds;
     _appData.saveCurrentSecond(value: secondsNumber!);
   }
 
